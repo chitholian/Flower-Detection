@@ -1,0 +1,60 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-5 col-md-6">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Search Form</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <form method="post" enctype="multipart/form-data" #myForm="ngForm" (ngSubmit)="submitForm()">
+            <mat-radio-group name="searchType" [(ngModel)]="model.searchType" value="image">
+              <mat-radio-button value="image" class="mr-5"> Search by image</mat-radio-button>
+              <mat-radio-button value="keywords"> Search by keywords</mat-radio-button>
+            </mat-radio-group>
+            <mat-form-field appearance="outline" *ngIf="model.searchType == 'keywords'" class="w-100">
+              <mat-label>Keywords</mat-label>
+              <input matInput name="keywords" [(ngModel)]="model.keywords" [required]="model.searchType == 'keywords'">
+            </mat-form-field>
+            <input #fileSelection type="file" accept="image/*" name="image" hidden (change)="onFileChanged($event)"
+                   [required]="model.searchType == 'image'">
+            <div class="form-group w-100 text-center" *ngIf="model.searchType == 'image' && imgSrc">
+              <img [src]="imgSrc" #image
+                   style="max-width: 200px;padding:5px;border: 1px solid #ccc;border-radius: 15px;outline: 0;cursor:pointer;"
+                   (click)="fileSelection.click()">
+              <div class="mat-error" *ngIf="!fileSelection.value">Image is required.</div>
+            </div>
+            <div class="form-group" *ngIf="!result.inProgress">
+              <button type="submit" class="btn btn-primary w-100" [disabled]="!myForm.valid">
+                SUBMIT
+              </button>
+            </div>
+            <mat-progress-bar *ngIf="result.inProgress" color="primary" mode="indeterminate"
+                              class="w-100"></mat-progress-bar>
+          </form>
+          <br>
+          <div *ngIf="result.hasError && !result.inProgress" class="mat-error">
+            {{result.error}}
+          </div>
+          <div *ngIf="result.hasDetection">
+            <p *ngIf="result.data.detections > 0">Number of Detections: {{result.data.detections}}</p>
+            <p *ngIf="result.data.detections == 0" class="mat-error">Nothing Detected!</p>
+            <canvas #theCanvas class="w-100" *ngIf="result.data.queryType === 'image'"></canvas>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-lg-7 col-md-6">
+      <div *ngFor="let cat of detectedCategories()">
+        <h4 class="text-center">{{categoryNames[cat % 6]}}</h4>
+        <section [style.color]="categoryColors[cat % 6]" class="similar-images">
+          <div [innerHTML]="result.data.taxanomy[cat % 6] | safeHtml" class="taxanomy"></div>
+          <h5>Similar Images</h5>
+          <img *ngFor="let img of result.data.similarImages[cat % 6]" [src]="'/api/thumbs/'+(cat % 6)+'/'+img"
+               style="height: 100px" (click)="openFullImage(cat % 6, img)">
+        </section>
+        <br>
+        <mat-divider></mat-divider>
+      </div>
+    </div>
+  </div>
+</div>
