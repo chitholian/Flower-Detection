@@ -80,7 +80,7 @@ def search(request):
 
         # Run inference on the uploaded image.
         image = Image.open(request.FILES.get('image'))
-        image = image.resize((300, 300))
+        image = image.resize((300, 300)).convert('RGB')
         image = np.asarray(image, dtype=np.uint8)
 
         # Load TFLite model and allocate tensors.
@@ -115,7 +115,7 @@ def search(request):
 
         for d in range(int(detections[0])):
             score = scores[0][d]
-            if score >= 0.50:
+            if score >= 0.25:
                 loc = locations[0][d]
                 category = categories[0][d]
                 result['detections'] = result['detections'] + 1
