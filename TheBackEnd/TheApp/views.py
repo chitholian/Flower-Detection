@@ -14,9 +14,10 @@ import glob
 import os
 
 
-def get_taxanomy_and_images(categories):
+def get_flower_info_and_images(categories):
     categories = [i % 6 for i in categories]
     taxanomy = {}
+    benefits = {}
     similar_images = {}
     with open(f'{BASE_DIR}/TheApp/flowers/ML-Models/labelmap.txt', 'r') as label_file:
         i = 0
@@ -26,6 +27,7 @@ def get_taxanomy_and_images(categories):
                 continue
             if i not in categories:
                 taxanomy[i] = ''
+                benefits[i] = ''
                 similar_images[i] = []
             else:
                 thumbs = glob.glob(f'{BASE_DIR}/TheApp/flowers/thumbs/{i}/*.jpg')
@@ -33,9 +35,11 @@ def get_taxanomy_and_images(categories):
                 similar_images[i] = images
                 with open(f'{BASE_DIR}/TheApp/flowers/taxanomy/{i}.html', 'r') as info_file:
                     taxanomy[i] = info_file.read()
+                with open(f'{BASE_DIR}/TheApp/flowers/benefits/{i}.html', 'r') as info_file:
+                    benefits[i] = info_file.read()
             i = i + 1
 
-    return list(taxanomy.values()), list(similar_images.values())
+    return list(taxanomy.values()), list(benefits.values()), list(similar_images.values())
 
 
 def search(request):
@@ -54,6 +58,7 @@ def search(request):
             'categories': [],
             'similarImages': [],
             'taxanomy': [],
+            'benefits': [],
             'queryType': 'keywords',
         }
 
@@ -70,7 +75,7 @@ def search(request):
 
         result['detections'] = len(set(result['categories']))
 
-        result['taxanomy'], result['similarImages'] = get_taxanomy_and_images(result['categories'])
+        result['taxanomy'], result['benefits'], result['similarImages'] = get_flower_info_and_images(result['categories'])
 
         return JsonResponse(result, safe=True)
 
@@ -110,6 +115,7 @@ def search(request):
             'categories': [],
             'similarImages': [],
             'taxanomy': [],
+            'benefits': [],
             'queryType': 'image',
         }
 
@@ -123,7 +129,7 @@ def search(request):
                 result['scores'].append(score)
                 result['categories'].append(category)
 
-        result['taxanomy'], result['similarImages'] = get_taxanomy_and_images(result['categories'])
+        result['taxanomy'], result['benefits'], result['similarImages'] = get_flower_info_and_images(result['categories'])
 
         return JsonResponse(result, encoder=NumpyJSONEncoder, safe=True)
 

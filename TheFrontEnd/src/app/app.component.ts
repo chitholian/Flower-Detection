@@ -19,6 +19,7 @@ class MyData {
   detections = 0;
   similarImages = [];
   taxanomy = [];
+  benefits = [];
   queryType = '';
 }
 

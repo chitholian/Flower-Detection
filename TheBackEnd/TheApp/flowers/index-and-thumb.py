@@ -23,12 +23,15 @@ with open('ML-Models/labelmap.txt', 'r') as labels:
         if len(label) == 0:
             continue
         print(f'{i}. Working on flower "{label}"...')
-
+        info = ''
         print(f'{i}. Reading taxanomy...')
         with open(f'taxanomy/{i}.html', 'r') as flower_info:
-            info = label + '\n' + flower_info.read()
-            print(f'{i}. Creating index...')
-            writer.add_document(title=f"{label}", cat_id=f"{i}", content=info)
+            info += label + '\n' + flower_info.read()
+        print(f'{i}. Reading benefits...')
+        with open(f'benefits/{i}.html', 'r') as flower_benefits:
+            info += '\n' + flower_benefits.read()
+        print(f'{i}. Creating index...')
+        writer.add_document(title=f"{label}", cat_id=f"{i}", content=info)
 
         print(f'{i}. Creating thumbnails...')
         for image in glob.glob(f'images/{i}/*.jpg'):

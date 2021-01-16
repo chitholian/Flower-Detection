@@ -7,6 +7,7 @@ An educational repository utilizing machine learning to recognize flowers in ima
 * Detect and recognize flowers in an image.
 * Draw bounding boxes around detected images.
 * Show full taxonomy of detected images.
+* Show benefits and usefulness of detected images.
 * Search by
     * image
     * keywords.

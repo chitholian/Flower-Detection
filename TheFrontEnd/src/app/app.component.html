@@ -48,6 +48,7 @@
         <h4 class="text-center">{{categoryNames[cat % 6]}}</h4>
         <section [style.color]="categoryColors[cat % 6]" class="similar-images">
           <div [innerHTML]="result.data.taxanomy[cat % 6] | safeHtml" class="taxanomy"></div>
+          <div [innerHTML]="result.data.benefits[cat % 6] | safeHtml" class="benefits"></div>
           <h5>Similar Images</h5>
           <img *ngFor="let img of result.data.similarImages[cat % 6]" [src]="'/api/thumbs/'+(cat % 6)+'/'+img"
                style="height: 100px" (click)="openFullImage(cat % 6, img)">
