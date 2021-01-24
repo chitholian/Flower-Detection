@@ -5,9 +5,10 @@ An educational repository utilizing machine learning to recognize flowers in ima
 ## Features
 
 * Detect and recognize flowers in an image.
-* Draw bounding boxes around detected images.
-* Show full taxonomy of detected images.
-* Show benefits and usefulness of detected images.
+* Draw bounding boxes around detected flowers.
+* Show full taxonomy of detected flowers.
+* Show benefits and usefulness of detected flowers.
+* Show colors and blooming seasons of flowers.
 * Search by
     * image
     * keywords.
@@ -41,7 +42,7 @@ We assume you have following packages already installed
 * `python3 < 3.8`
 * `virtualenv`
 * `pip`
-* `nodejs`
+* `nodejs >= 10`
 * `npm`
 
 ### Clone this repository
@@ -53,6 +54,14 @@ PROJECT_DIR="$(pwd)"
 ```
 
 ### Build the Frontend
+
+You need angular-cli, install it globally,
+
+```bash
+sudo npm install -g @angular/cli
+```
+
+Install required modules and build frontend,
 
 ```bash
 cd "$PROJECT_DIR/TheFrontEnd"

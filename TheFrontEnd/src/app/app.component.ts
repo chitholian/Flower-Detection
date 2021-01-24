@@ -20,6 +20,7 @@ class MyData {
   similarImages = [];
   taxanomy = [];
   benefits = [];
+  extra = [];
   queryType = '';
 }
 
@@ -135,7 +136,6 @@ export class AppComponent {
             this.result.data = data;
             this.result.error = null;
             this.result.hasDetection = true;
-            console.log(this.result.data);
             if (this.result.data.queryType === 'image') {
               this.showDetections();
             }

@@ -30,6 +30,9 @@ with open('ML-Models/labelmap.txt', 'r') as labels:
         print(f'{i}. Reading benefits...')
         with open(f'benefits/{i}.html', 'r') as flower_benefits:
             info += '\n' + flower_benefits.read()
+        print(f'{i}. Reading extra-info...')
+        with open(f'extra-info/{i}.html', 'r') as flower_info:
+            info += '\n' + flower_info.read()
         print(f'{i}. Creating index...')
         writer.add_document(title=f"{label}", cat_id=f"{i}", content=info)
 
