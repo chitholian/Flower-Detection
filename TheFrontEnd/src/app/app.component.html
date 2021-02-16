@@ -1,4 +1,10 @@
-<div class="container-fluid">
+
+  <mat-toolbar color="primary">
+    <span>Flower Recognition</span> 
+    <span style="flex: 1 1 auto;"></span>
+    <small class="hide-sm">An automated flower recognition system</small>
+  </mat-toolbar>
+  <div class="container-fluid">
   <div class="row">
     <div class="col-lg-5 col-md-6">
       <mat-card>
@@ -36,8 +42,8 @@
             {{result.error}}
           </div>
           <div *ngIf="result.hasDetection">
-            <p *ngIf="result.data.detections > 0">Number of Detections: {{result.data.detections}}</p>
-            <p *ngIf="result.data.detections == 0" class="mat-error">Nothing Detected!</p>
+            <p *ngIf="result.data.detections > 0">Number of Recognitions: {{result.data.detections}}</p>
+            <p *ngIf="result.data.detections == 0" class="mat-error">Nothing Recognized!</p>
             <canvas #theCanvas class="w-100" *ngIf="result.data.queryType === 'image'"></canvas>
           </div>
         </mat-card-content>

@@ -11,6 +11,7 @@ import {
   MatGridListModule,
   MatInputModule,
   MatProgressBarModule,
+  MatToolbarModule,
   MatRadioModule
 } from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -35,6 +36,7 @@ import {HttpClientModule, HttpClientXsrfModule} from '@angular/common/http';
     HttpClientXsrfModule,
     MatProgressBarModule,
     MatGridListModule,
+    MatToolbarModule,
     MatExpansionModule
   ],
   providers: [],
